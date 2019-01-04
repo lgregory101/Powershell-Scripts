@@ -1,0 +1,8 @@
+$file = 'c:\path'
+
+$Messages = Get-ChildItem -Path $file | Where-Object {$_.Length -gt 1mb} | ForEach-Object {
+    'Users: {0} have Outlook Data Files larger than 8gb, with a total of {1:N2}mb' -f $_.name, ($_.length/1mb)
+}
+$Messages | Write-Host -ForegroundColor 'Red'
+
+Send-MailMessage -To "User01 <email.com>" -From "User02 <email.com>" -Subject "Test mail" -Body "$messages" -SmtpServer "smtp.server"
